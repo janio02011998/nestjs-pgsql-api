@@ -1,12 +1,13 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserRole } from './user-roles.enum';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { CustomRepository } from 'src/database/typeorm-ex.decorator';
 
-@EntityRepository(User)
+@CustomRepository(User)
 export class UserRepository extends Repository<User> {
   async createUser(createUserDto: CreateUserDto, role: UserRole): Promise<User> {
     const { email, name, password } = createUserDto;
