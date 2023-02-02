@@ -4,12 +4,19 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserRole } from './user-roles.enum';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { CredentialsDto } from '../auth/dto/credentials.dto';
 import { CustomRepository } from 'src/database/typeorm-ex.decorator';
 
 @CustomRepository(User)
 export class UserRepository extends Repository<User> {
-  async createUser(createUserDto: CreateUserDto, role: UserRole): Promise<User> {
+  async createUser(
+    createUserDto: CreateUserDto,
+    role: UserRole,
+  ): Promise<User> {
     const { email, name, password } = createUserDto;
 
     const user = this.create();
@@ -29,8 +36,23 @@ export class UserRepository extends Repository<User> {
       if (error.code.toString() === '23505') {
         throw new ConflictException('Endereço de email já está em uso');
       } else {
-        throw new InternalServerErrorException('Erro ao salvar o usuário no banco de dados');
+        throw new InternalServerErrorException(
+          'Erro ao salvar o usuário no banco de dados',
+        );
       }
+    }
+  }
+
+  async checkCredentials(credentialsDto: CredentialsDto): Promise<User> {
+    const { email, password } = credentialsDto;
+    const user = await this.findOne({
+      where: { email, status: true },
+    });
+
+    if (user && (await user.checkPassword(password))) {
+      return user;
+    } else {
+      return null;
     }
   }
 
