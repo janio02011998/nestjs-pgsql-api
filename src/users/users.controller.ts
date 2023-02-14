@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Get,
+  Param,
   Post,
   UseGuards,
   ValidationPipe,
@@ -29,6 +31,16 @@ export class UsersController {
     return {
       user,
       message: 'Administrador cadastrado com sucesso',
+    };
+  }
+
+  @Get(':id')
+  @Role(UserRole.ADMIN)
+  async findUserById(@Param('id') id): Promise<ReturnUserDto> {
+    const user = await this.usersService.findUserById(id);
+    return {
+      user,
+      message: 'Usuário encontrado',
     };
   }
 }
