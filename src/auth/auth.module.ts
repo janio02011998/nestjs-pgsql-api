@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmExModule } from 'src/database/typeorm-ex.module';
+import { JwtStrategy } from 'src/services/jwt.strategy';
 
 import { UserRepository } from 'src/users/users.repository';
 
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
