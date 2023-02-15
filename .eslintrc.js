@@ -32,6 +32,11 @@ module.exports = {
         ],
         pathGroups: [
           {
+            pattern: '@(@nestjs)',
+            group: 'external',
+            position: 'before',
+          },
+          {
             pattern: 'src/configs/**',
             group: 'internal',
             position: 'before',
