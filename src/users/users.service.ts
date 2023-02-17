@@ -5,11 +5,12 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from './users.repository';
+
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './user.entity';
-import { UserRole } from './user-roles.enum';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserRole } from './user-roles.enum';
+import { User } from './user.entity';
+import { UserRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
@@ -52,6 +53,16 @@ export class UsersService {
     } catch (error) {
       throw new InternalServerErrorException(
         'Erro ao salvar os dados no banco de dados',
+      );
+    }
+  }
+
+  async deleteUser(userId: string): Promise<void> {
+    const result = await this.userRepository.delete({ id: userId });
+
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        'Não foi encontrado um usuário com o ID informado',
       );
     }
   }
