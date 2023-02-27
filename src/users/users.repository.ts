@@ -1,15 +1,18 @@
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserRole } from './user-roles.enum';
-import * as bcrypt from 'bcrypt';
-import * as crypto from 'crypto';
 import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { CredentialsDto } from '../auth/dto/credentials.dto';
+
+import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
+import { Repository } from 'typeorm';
+
 import { CustomRepository } from 'src/database/typeorm-ex.decorator';
+
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserRole } from './user-roles.enum';
+import { User } from './user.entity';
+import { CredentialsDto } from '../auth/dto/credentials.dto';
 
 @CustomRepository(User)
 export class UserRepository extends Repository<User> {
