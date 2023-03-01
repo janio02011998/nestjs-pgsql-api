@@ -1,5 +1,5 @@
 export abstract class BaseQueryParametersDto {
-  sort: string;
+  sort: 'ASC' | 'DESC';
   page: number;
   limit: number;
 }

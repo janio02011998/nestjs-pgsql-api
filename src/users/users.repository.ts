@@ -25,6 +25,7 @@ export class UserRepository extends Repository<User> {
     queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
 
     const { email, name, status, role } = queryDto;
+    console.log(queryDto);
     const query = this.createQueryBuilder('user');
     query.where('user.status = :status', { status });
 
@@ -41,7 +42,7 @@ export class UserRepository extends Repository<User> {
     }
     query.skip((queryDto.page - 1) * queryDto.limit);
     query.take(+queryDto.limit);
-    query.orderBy(queryDto.sort ? JSON.parse(queryDto.sort) : undefined);
+    query.orderBy('user.name', queryDto.sort);
     query.select(['user.name', 'user.email', 'user.role', 'user.status']);
 
     const [users, total] = await query.getManyAndCount();
