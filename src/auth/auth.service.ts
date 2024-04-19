@@ -3,15 +3,14 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-
-import { UserRepository } from '../users/users.repository';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { User } from '../users/user.entity';
-import { UserRole } from '../users/user-roles.enum';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import { CredentialsDto } from './dto/credentials.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UserRole } from '../users/user-roles.enum';
+import { User } from '../users/user.entity';
+import { UserRepository } from '../users/users.repository';
 
 @Injectable()
 export class AuthService {
