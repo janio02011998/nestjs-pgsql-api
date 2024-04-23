@@ -25,8 +25,8 @@ export class UserRepository extends Repository<User> {
     queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
 
     const { email, name, status, role } = queryDto;
-    console.log(queryDto);
     const query = this.createQueryBuilder('user');
+
     query.where('user.status = :status', { status });
 
     if (email) {
