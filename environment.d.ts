@@ -6,6 +6,10 @@ declare global {
       PGSQL_DATABASE: string;
       PGSQL_HOST: string;
       PGSQL_PORT: number;
+
+      MAIL_HOST: string;
+      MAIL_USER: string;
+      MAIL_PASS: string;
     }
   }
 }
