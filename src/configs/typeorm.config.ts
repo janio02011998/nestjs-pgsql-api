@@ -10,7 +10,7 @@ export default registerAs(
     username: process.env.PGSQL_USERNAME,
     password: process.env.PGSQL_PASSWORD,
     database: process.env.PGSQL_DATABASE,
-    autoLoadEntities: true,
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: true,
   }),
 );
