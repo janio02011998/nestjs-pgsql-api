@@ -43,7 +43,13 @@ export class UserRepository extends Repository<User> {
     query.skip((queryDto.page - 1) * queryDto.limit);
     query.take(+queryDto.limit);
     query.orderBy('user.name', queryDto.sort);
-    query.select(['user.name', 'user.email', 'user.role', 'user.status']);
+    query.select([
+      'user.name',
+      'user.email',
+      'user.role',
+      'user.status',
+      'user.id',
+    ]);
 
     const [users, total] = await query.getManyAndCount();
 
