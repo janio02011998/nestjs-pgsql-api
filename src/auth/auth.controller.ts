@@ -38,6 +38,16 @@ export class AuthController {
     return await this.authService.signIn(credentiaslsDto);
   }
 
+  @Post('/send-recover-email')
+  async sendRecoverPasswordEmail(
+    @Body('email') email: string,
+  ): Promise<{ message: string }> {
+    await this.authService.sendRecoverPasswordEmail(email);
+    return {
+      message: 'Foi enviado um email com instruções para resetar sua senha',
+    };
+  }
+
   @Get('/me')
   @UseGuards(AuthGuard())
   getMe(@Req() req): User {
