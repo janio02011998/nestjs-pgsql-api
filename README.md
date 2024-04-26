@@ -29,7 +29,8 @@ API REST com database PostgreSQL utilizando docker.
 
 - Clone o repositório
 - Instale as dependências com `yarn`
-- Inicie o servidor com `yarn dev`
+- Baixar as imagens dos containers `docker compose up`
+- Inicie o servidor com `yarn start:dev`
 
 Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu navegador.
 
@@ -39,4 +40,4 @@ Projeto aberto, baixe e divirta-se.
 
 ---
 
-Feito com ♥ by Jânio Carvalho 👋🏻 [Acesse meu Portfolio!](www.janiocarvalho.com)
+<!-- Feito com ♥ by Jânio Carvalho 👋🏻 [Acesse meu Portfolio!](www.janiocarvalho.com) -->
