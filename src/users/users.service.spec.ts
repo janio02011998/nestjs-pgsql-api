@@ -12,6 +12,7 @@ import { UsersService } from './users.service';
 
 const mockUserRepository = () => ({
   createUser: jest.fn(),
+  update: jest.fn(),
   findOne: jest.fn(),
   delete: jest.fn(),
   findUsers: jest.fn(),
@@ -124,6 +125,29 @@ describe('UsersService', () => {
         mockFindUsersQueryDto,
       );
       expect(result).toEqual('resultOfsearch');
+    });
+  });
+
+  describe('updateUser', () => {
+    // eslint-disable-next-line max-len
+    it('should return affected > 0 if user data is updated and return the new user', async () => {
+      userRepository.update.mockResolvedValue({ affected: 1 });
+      userRepository.findOne.mockResolvedValue('mockUser');
+
+      const result = await service.updateUser('mockUpdateUserDto', 'mockId');
+      expect(userRepository.update).toHaveBeenCalledWith(
+        { id: 'mockId' },
+        'mockUpdateUserDto',
+      );
+      expect(result).toEqual('mockUser');
+    });
+
+    it('should throw an error if no row is affected in the DB', async () => {
+      userRepository.update.mockResolvedValue({ affected: 0 });
+
+      expect(service.updateUser('mockUpdateUserDto', 'mockId')).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 });
