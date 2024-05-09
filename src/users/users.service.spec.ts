@@ -6,6 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { UserRepository } from './../users/users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
+import { FindUsersQueryDto } from './dto/find-users-query.dto';
 import { UserRole } from './user-roles.enum';
 import { UsersService } from './users.service';
 
@@ -103,6 +104,26 @@ describe('UsersService', () => {
       userRepository.delete.mockResolvedValue({ affected: 0 });
 
       expect(service.deleteUser('mockId')).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('findUsers', () => {
+    it('should call the findUsers method of the userRepository', async () => {
+      userRepository.findUsers.mockResolvedValue('resultOfsearch');
+      const mockFindUsersQueryDto: FindUsersQueryDto = {
+        name: '',
+        email: '',
+        limit: 1,
+        page: 1,
+        role: '',
+        sort: 'ASC',
+        status: true,
+      };
+      const result = await service.findUsers(mockFindUsersQueryDto);
+      expect(userRepository.findUsers).toHaveBeenCalledWith(
+        mockFindUsersQueryDto,
+      );
+      expect(result).toEqual('resultOfsearch');
     });
   });
 });
