@@ -90,4 +90,19 @@ describe('UsersService', () => {
       expect(service.findUserById('mockId')).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('deleteUser', () => {
+    it('should return affected > 0 if user is deleted', async () => {
+      userRepository.delete.mockResolvedValue({ affected: 1 });
+
+      await service.deleteUser('mockId');
+      expect(userRepository.delete).toHaveBeenCalledWith({ id: 'mockId' });
+    });
+
+    it('should throw an error if no user is deleted', async () => {
+      userRepository.delete.mockResolvedValue({ affected: 0 });
+
+      expect(service.deleteUser('mockId')).rejects.toThrow(NotFoundException);
+    });
+  });
 });
